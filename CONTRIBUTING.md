@@ -5,6 +5,7 @@ Thank you for your interest in contributing to **LLM-Play**! We welcome contribu
 ## How to Contribute
 
 ### 1. Fork and Clone the Repository
+
 - **Fork the repository** on GitHub.
 - **Clone your fork** locally:
   ```bash
@@ -13,25 +14,32 @@ Thank you for your interest in contributing to **LLM-Play**! We welcome contribu
   ```
 
 ### 2. Create a New Branch
+
 Create a branch for your changes (replace `feature/your-feature` with a descriptive name):
+
 ```bash
 git checkout -b feature/your-feature
 ```
 
 ### 3. Make Your Changes
+
 - **Code:** Add new features or fix bugs.
 - **Documentation:** Update the README or other docs if necessary.
 - **Tests:** Add or update tests to cover your changes.
 
 ### 4. Follow the Code Style Guidelines
+
 - Follow the existing code style and run ESLint (if configured) before committing.
 - Write clear, descriptive commit messages that explain **what** and **why** you’ve changed something.
 
 ### 5. Test Your Changes
+
 Ensure that your changes pass all tests. If new tests are added, they must run successfully before you submit a pull request.
 
 ### 6. Commit and Push Your Changes
+
 Commit your work and push your branch to your fork:
+
 ```bash
 git add .
 git commit -m "Add [brief description of feature or fix]"
@@ -39,6 +47,7 @@ git push origin feature/your-feature
 ```
 
 ### 7. Open a Pull Request
+
 - Navigate to the original repository on GitHub and open a new pull request (PR).
 - Provide a clear title and description of your changes.
 - Reference any related issues using GitHub’s issue linking (e.g., “Closes #123”).
@@ -46,6 +55,7 @@ git push origin feature/your-feature
 ## Reporting Issues
 
 If you encounter a bug or have a feature suggestion:
+
 - **Search existing issues** to see if the problem has already been reported.
 - If not, **open a new issue** and include as much detail as possible (steps to reproduce, expected behavior, etc.).
 

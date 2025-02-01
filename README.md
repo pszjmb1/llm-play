@@ -1,4 +1,5 @@
 # LLM-Play
+
 _A Collaborative Gym for Exploring the Limits of Language Models_
 
 ![LLM-Play Banner](app/banner.svg)
@@ -9,7 +10,7 @@ _A Collaborative Gym for Exploring the Limits of Language Models_
 
 Our platform combines the creativity of a diverse community with the rigor of reproducible testing, driving innovation and offering a transparent benchmarking system for today’s language models.
 
-**Inspired by [Andrej Karpathy's vision](https://x.com/karpathy/status/1884676486713737258): *"The highest leverage thing you can do is help construct a high diversity of RL environments that help elicit LLM cognitive strategies. To build a gym of sorts. This is a highly parallelizable task, which favors a large community of collaborators."***
+**Inspired by [Andrej Karpathy's vision](https://x.com/karpathy/status/1884676486713737258): _"The highest leverage thing you can do is help construct a high diversity of RL environments that help elicit LLM cognitive strategies. To build a gym of sorts. This is a highly parallelizable task, which favors a large community of collaborators."_**
 
 ---
 
@@ -17,7 +18,7 @@ Our platform combines the creativity of a diverse community with the rigor of re
 
 At LLM-Play, our mission is to:
 
->  **Empower the AI community to unlock the full potential of large language models through a collaborative, crowdsourced playground of reinforcement learning challenges.**
+> **Empower the AI community to unlock the full potential of large language models through a collaborative, crowdsourced playground of reinforcement learning challenges.**
 
 We believe that by working together, we can reveal insights into LLM behavior that drive the next generation of AI research and applications.
 
@@ -26,14 +27,17 @@ We believe that by working together, we can reveal insights into LLM behavior th
 ## Value Proposition
 
 ### For AI Researchers:
+
 - **Innovative Experimentation:** Test LLMs under diverse, real-world challenges to uncover unique cognitive strategies.
 - **Robust Benchmarking:** Leverage a standardized suite of tests to evaluate and compare different LLM architectures.
 
 ### For Developers & Open Source Enthusiasts:
+
 - **Community-Driven Creativity:** Contribute new challenges, refine existing environments, and push the boundaries of what LLMs can do.
 - **Learning and Collaboration:** Collaborate with experts and enthusiasts from around the globe, sharing knowledge and best practices.
 
 ### For Everyone:
+
 - **Transparency & Reproducibility:** All experiments, tests, and benchmarks are open for scrutiny and continuous improvement.
 - **Inclusivity:** Whether you’re a seasoned researcher or a curious newcomer, you’re invited to contribute and learn from the collective experience.
 
@@ -51,24 +55,28 @@ We believe that by working together, we can reveal insights into LLM behavior th
 ## Getting Started
 
 ### Prerequisites
+
 - **Node.js** (v14+ recommended)
 - A **Supabase** account for the backend
 
 ### Installation
 
 1. **Clone the Repository:**
+
    ```bash
    git clone https://github.com/LLM-Play/llm-play.git
    cd llm-play
    ```
 
 2. **Install Dependencies:**
+
    ```bash
    npm install
    ```
 
 3. **Set Up Environment Variables:**
    Create a `.env.local` file in the project root with:
+
    ```dotenv
    NEXT_PUBLIC_SUPABASE_URL=https://your-supabase-project-url.supabase.co
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key
@@ -97,11 +105,13 @@ Every contribution helps us improve and evolve LLM-Play, so don’t hesitate to 
 ## Roadmap
 
 **Short Term:**
+
 - Enhance the UI for submitting and testing environments.
 - Integrate additional LLM APIs for broader benchmarking.
 - Refine community voting and result analysis features.
 
 **Long Term:**
+
 - Develop advanced analytics dashboards.
 - Host community events, hackathons, and webinars.
 - Expand the platform to support more complex multi-agent and adaptive learning challenges.
