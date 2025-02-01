@@ -1,8 +1,8 @@
 import DeployButton from '@/components/deploy-button';
 import { EnvVarWarning } from '@/components/env-var-warning';
 import HeaderAuth from '@/components/header-auth';
-import { ThemeSwitcher } from '@/components/theme-switcher';
 import { hasEnvVars } from '@/utils/supabase/check-env-vars';
+import Footer from '@/components/footer';
 import { Geist } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import Link from 'next/link';
@@ -14,8 +14,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'Next.js and Supabase Starter Kit',
-  description: 'The fastest way to build apps with Next.js and Supabase',
+  title: 'LLM-Play',
+  description: 'A Collaborative Gym for Exploring the Limits of Language Models',
 };
 
 const geistSans = Geist({
@@ -51,21 +51,7 @@ export default function RootLayout({
                 </div>
               </nav>
               <div className="flex max-w-5xl flex-col gap-20 p-5">{children}</div>
-
-              <footer className="mx-auto flex w-full items-center justify-center gap-8 border-t py-16 text-center text-xs">
-                <p>
-                  Powered by{' '}
-                  <a
-                    href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-                    target="_blank"
-                    className="font-bold hover:underline"
-                    rel="noreferrer"
-                  >
-                    Supabase
-                  </a>
-                </p>
-                <ThemeSwitcher />
-              </footer>
+              <Footer />
             </div>
           </main>
         </ThemeProvider>

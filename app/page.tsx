@@ -1,12 +1,16 @@
 import Hero from '@/components/hero';
 import Main from '@/components/site/home/main';
-import Footer from '@/components/footer';
 export default async function Home() {
-  return (
-    <>
+  return (    
+  <div
+    style={{
+      maxWidth: 1280,
+      margin: '0 auto',
+      padding: '2rem',
+    }}
+  >
       <Hero />
       <Main />
-      <Footer />
-    </>
+  </div>
   );
 }

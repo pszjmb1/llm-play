@@ -11,7 +11,7 @@ export default function SignUpUserSteps() {
           <p className="mt-4">
             This particular deployment is
             <span className="relative rounded border bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs font-medium text-secondary-foreground">
-              "{process.env.VERCEL_ENV}"
+            &quot;{process.env.VERCEL_ENV}&quot;
             </span>{' '}
             on
             <span className="relative rounded border bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs font-medium text-secondary-foreground">
@@ -73,7 +73,7 @@ export default function SignUpUserSteps() {
           <Link href="/sign-up" className="font-bold text-foreground/80 hover:underline">
             Sign up
           </Link>{' '}
-          page and sign up your first user. It's okay if this is just you for now. Your awesome idea
+          page and sign up your first user. It&apos;s okay if this is just you for now. Your awesome idea
           will have plenty of users later!
         </p>
       </TutorialStep>
