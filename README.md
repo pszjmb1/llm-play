@@ -1,104 +1,124 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+# LLM-Play
+_A Collaborative Gym for Exploring the Limits of Language Models_
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+![LLM-Play Banner](app/banner.svg)
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+## Overview
 
-## Features
+**LLM-Play** is an open source project that empowers the AI community to explore, benchmark, and evolve large language model capabilities. We offer a dynamic, crowdsourced gym where researchers, developers, and enthusiasts alike can submit and test novel reinforcement learning challenges designed to reveal the hidden cognitive strategies of LLMs.
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Middleware
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+Our platform combines the creativity of a diverse community with the rigor of reproducible testing, driving innovation and offering a transparent benchmarking system for today’s language models.
 
-## Demo
+**Inspired by [Andrej Karpathy's vision](https://x.com/karpathy/status/1884676486713737258): *"The highest leverage thing you can do is help construct a high diversity of RL environments that help elicit LLM cognitive strategies. To build a gym of sorts. This is a highly parallelizable task, which favors a large community of collaborators."***
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+---
 
-## Deploy to Vercel
+## Our Mission
 
-Vercel deployment will guide you through creating a Supabase account and project.
+At LLM-Play, our mission is to:
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+>  **Empower the AI community to unlock the full potential of large language models through a collaborative, crowdsourced playground of reinforcement learning challenges.**
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
+We believe that by working together, we can reveal insights into LLM behavior that drive the next generation of AI research and applications.
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+---
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+## Value Proposition
 
-## Clone and run locally
+### For AI Researchers:
+- **Innovative Experimentation:** Test LLMs under diverse, real-world challenges to uncover unique cognitive strategies.
+- **Robust Benchmarking:** Leverage a standardized suite of tests to evaluate and compare different LLM architectures.
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+### For Developers & Open Source Enthusiasts:
+- **Community-Driven Creativity:** Contribute new challenges, refine existing environments, and push the boundaries of what LLMs can do.
+- **Learning and Collaboration:** Collaborate with experts and enthusiasts from around the globe, sharing knowledge and best practices.
 
-2. Create a Next.js app using the Supabase Starter template npx command
+### For Everyone:
+- **Transparency & Reproducibility:** All experiments, tests, and benchmarks are open for scrutiny and continuous improvement.
+- **Inclusivity:** Whether you’re a seasoned researcher or a curious newcomer, you’re invited to contribute and learn from the collective experience.
 
+---
+
+## Key Features
+
+- **Crowdsourced Environments:** Submit and vote on innovative reinforcement learning challenges.
+- **LLM Benchmarking:** Easily test and compare different language models in a unified interface.
+- **Community Analytics:** Access detailed analysis and metrics to track model performance and challenge impact.
+- **Open Collaboration:** Join a global community focused on transparency, learning, and iterative improvement.
+
+---
+
+## Getting Started
+
+### Prerequisites
+- **Node.js** (v14+ recommended)
+- A **Supabase** account for the backend
+
+### Installation
+
+1. **Clone the Repository:**
    ```bash
-   npx create-next-app --example with-supabase with-supabase-app
+   git clone https://github.com/LLM-Play/llm-play.git
+   cd llm-play
    ```
 
+2. **Install Dependencies:**
    ```bash
-   yarn create next-app --example with-supabase with-supabase-app
+   npm install
    ```
 
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
+3. **Set Up Environment Variables:**
+   Create a `.env.local` file in the project root with:
+   ```dotenv
+   NEXT_PUBLIC_SUPABASE_URL=https://your-supabase-project-url.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key
    ```
 
-3. Use `cd` to change into the app's directory
-
-   ```bash
-   cd with-supabase-app
-   ```
-
-4. Rename `.env.example` to `.env.local` and update the following:
-
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=[INSERT SUPABASE PROJECT API ANON KEY]
-   ```
-
-   Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` can be found in [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
-
-5. You can now run the Next.js local development server:
-
+4. **Run the Development Server:**
    ```bash
    npm run dev
    ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
+---
 
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
+## How to Contribute
 
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+We welcome contributions of every kind—code, documentation, ideas, and more! To get started:
 
-## Feedback and issues
+- **Browse Issues:** Look for issues tagged with `good first issue` or `help wanted`.
+- **Review Our Guidelines:** Please read our [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before submitting any pull requests.
+- **Join the Conversation:** Connect with us on [Discord](https://discord.gg/LLM-Play) and our [GitHub Discussions](https://github.com/LLM-Play/llm-play/discussions).
 
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
+Every contribution helps us improve and evolve LLM-Play, so don’t hesitate to share your ideas!
 
-## More Supabase examples
+---
 
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+## Roadmap
+
+**Short Term:**
+- Enhance the UI for submitting and testing environments.
+- Integrate additional LLM APIs for broader benchmarking.
+- Refine community voting and result analysis features.
+
+**Long Term:**
+- Develop advanced analytics dashboards.
+- Host community events, hackathons, and webinars.
+- Expand the platform to support more complex multi-agent and adaptive learning challenges.
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## Connect with Us
+
+- **GitHub:** [github.com/LLM-Play/llm-play](https://github.com/LLM-Play/llm-play)
+- **Discord:** [Join our Discord](https://discord.gg/LLM-Play)
+- **Twitter:** [@LLM_Play](https://twitter.com/LLM_Play)
+- **Email:** contact@llmplay.org
+
+Together, we’re unlocking the future of AI. Welcome to LLM-Play!
