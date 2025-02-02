@@ -28,13 +28,13 @@ Welcome to **LLM-Play**, an open-source collaborative gym designed to explore, b
 
 1. **[Explore the Repository](https://github.com/pszjmb1/llm-play):** Dive into the code and start contributing.
 2. **[Join the Discussions](https://github.com/pszjmb1/llm-play/discussions):** Share ideas, ask questions, and collaborate with the community.
-3. **[Read the Documentation](./tutorials.md):** Learn how to submit environments, integrate LLM APIs, and more.
+3. **[Read the Documentation](#):** COMING SOON: Learn how to submit environments, integrate LLM APIs, and more.
 
 ---
 
 ## Roadmap
 
-We’re continuously evolving LLM-Play to support more complex challenges and deeper analytics. Check out our [Roadmap](./roadmap.md) for short-term and long-term goals.
+We’re continuously evolving LLM-Play to support more complex challenges and deeper analytics. Check out our [Roadmap](./ROADMAP.md) for short-term and long-term goals.
 
 - **Short-Term Goals:** UI enhancements, additional LLM API integrations, and community voting features.
 - **Long-Term Goals:** Multi-agent RL support, advanced analytics dashboards, and community hackathons.
@@ -45,7 +45,7 @@ We’re continuously evolving LLM-Play to support more complex challenges and de
 
 We welcome contributions of all kinds—code, documentation, ideas, and more!
 
-- **[Contribution Guide](./contribute.md):** Learn how to get involved.
+- **[Contribution Guide](./CONTRIBUTING.md):** Learn how to get involved.
 - **Labelled Issues:** Look for `good first issue` or `help wanted` labels in the [Issues](https://github.com/pszjmb1/llm-play/issues) section.
 
 Together, we’re unlocking the future of AI. Welcome to LLM-Play!
