@@ -1,3 +1,8 @@
+---
+layout: default
+title: Contributing to LLM-Play
+---
+
 # Contributing to LLM-Play
 
 Thank you for your interest in contributing to **LLM-Play**! We welcome contributions of all kinds—whether you're reporting a bug, suggesting a new feature, improving documentation, or writing code. By participating in this project, you agree to abide by our [Code of Conduct](docs/CODE_OF_CONDUCT.md).

@@ -1,3 +1,8 @@
+---
+layout: default
+title: LLM-Play Roadmap
+---
+
 # Roadmap
 
 We have an evolving roadmap with both short-term and long-term goals. A detailed roadmap is coming soon!
@@ -5,7 +10,6 @@ We have an evolving roadmap with both short-term and long-term goals. A detailed
 
 ## Short Term
 
-- Polish the app/protected/page.tsx to ensure seamless post-login user experience.
 - Enhance the UI for submitting and testing environments.
 - Integrate additional LLM APIs for broader benchmarking. Modularize API integration to support scalability.
    + Start with:

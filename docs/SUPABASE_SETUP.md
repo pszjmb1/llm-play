@@ -1,3 +1,8 @@
+---
+layout: default
+title: LLM-Play Backend Configuration
+---
+
 # Setting Up Your Supabase Backend
 
 LLM-Play is designed to work with a Supabase backend. Whether you prefer a hosted Supabase instance or running Supabase locally, the instructions below will help you get started quickly. Our open source codebase includes migration files and configuration templates so that anyone can easily set up their own backend.
