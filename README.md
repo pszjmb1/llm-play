@@ -132,8 +132,6 @@ This project is licensed under the [MIT License](LICENSE).
 ## Connect with Us
 
 - **GitHub:** [github.com/LLM-Play/llm-play](https://github.com/LLM-Play/llm-play)
-- **Discord:** Coming soon – join our GitHub Discussions in the meantime!
-- **Twitter:** Coming soon!
-- **Email:** Coming soon!
+- **Discussions:** [GitHub Discussions](https://github.com/pszjmb1/llm-play/discussions)
 
 Together, we’re unlocking the future of AI. Welcome to LLM-Play!
