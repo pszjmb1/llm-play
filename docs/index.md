@@ -7,7 +7,7 @@ title: LLM-Play
 
 Welcome to **LLM-Play**, an open-source collaborative gym designed to explore, benchmark, and evolve the capabilities of large language models (LLMs) through reinforcement learning environments.
 
-![LLM-Play Banner](../public/images/banner.svg)
+![LLM-Play Banner](./assets/banner.svg)
 
 ## What is LLM-Play?
 
@@ -45,7 +45,7 @@ We’re continuously evolving LLM-Play to support more complex challenges and de
 
 We welcome contributions of all kinds—code, documentation, ideas, and more!
 
-- **[Contribution Guide](./docs/CONTRIBUTING.md):** Learn how to get involved.
+- **[Contribution Guide](./CONTRIBUTING.md):** Learn how to get involved.
 - **Labelled Issues:** Look for `good first issue` or `help wanted` labels in the [Issues](https://github.com/pszjmb1/llm-play/issues) section.
 
 Together, we’re unlocking the future of AI. Welcome to LLM-Play!
