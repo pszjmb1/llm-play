@@ -1,4 +1,3 @@
-import FetchDataSteps from '@/components/tutorial/fetch-data-steps';
 import { createClient } from '@/utils/supabase/server';
 import { InfoIcon } from 'lucide-react';
 import { redirect } from 'next/navigation';
@@ -30,7 +29,7 @@ export default async function ProtectedPage() {
       </div>
       <div>
         <h2 className="mb-4 text-2xl font-bold">Next steps</h2>
-        <FetchDataSteps />
+        ...
       </div>
     </div>
   );

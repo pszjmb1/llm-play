@@ -104,22 +104,9 @@ Every contribution helps us improve and evolve LLM-Play, so don’t hesitate to 
 
 ---
 
-## Roadmap
+## [Roadmap](docs/ROADMAP.md)
 
-We have an evolving roadmap with both short-term and long-term goals. A detailed roadmap is coming soon!
-
-
-**Short Term:**
-
-- Enhance the UI for submitting and testing environments.
-- Integrate additional LLM APIs for broader benchmarking.
-- Refine community voting and result analysis features.
-
-**Long Term:**
-
-- Develop advanced analytics dashboards.
-- Host community events, hackathons, and webinars.
-- Expand the platform to support more complex multi-agent and adaptive learning challenges.
+Our [roadmap](docs/ROADMAP.md) is part of the broader RL-Play ecosystem —- coming soon!
 
 ---
 
