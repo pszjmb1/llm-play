@@ -1,6 +1,4 @@
 const nextConfig = {
-  // Remove or comment out the output property so that SSR is used:
-  // output: 'export',
   eslint: {
     ignoreDuringBuilds: true,
   },
