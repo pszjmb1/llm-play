@@ -61,11 +61,10 @@ If you encounter a bug or have a feature suggestion:
 
 ## Communication
 
-- **GitHub Discussions:** Use our GitHub Discussions to ask questions, share ideas, or discuss changes.
-- **Discord:** Join our [Discord community](https://discord.gg/yourinvite) for real-time chat and collaboration.
+- **GitHub Discussions:** Use our [GitHub Discussions](https://github.com/pszjmb1/llm-play/discussions) to ask questions, share ideas, or discuss changes.
 
 ## Thank You!
 
-We appreciate your efforts to help make **LLM-Play** better for everyone. If you have any questions or need assistance, please reach out on GitHub or Discord.
+We appreciate your efforts to help make **LLM-Play** better for everyone. If you have any questions or need assistance, please reach out on [GitHub](https://github.com/pszjmb1/llm-play/discussions).
 
 Happy coding!

@@ -74,8 +74,10 @@ We believe that by working together, we can reveal insights into LLM behavior th
    npm install
    ```
 
-3. **Set Up Environment Variables:**
-   Create a `.env.local` file in the project root with:
+3. **Set Up Supabase and Environment Variables:**
+   1. LLM-Play is designed to work with a Supabase backend. Follow the [Supabase Setup guide](docs/SUPABASE_SETUP.md) to run a hosted Supabase instance (with free or costed plans) or run Supabase locally (entirely free). Note that our open source codebase includes migration files and configuration templates so that anyone can easily set up their own backend, and even do so without Supabase if they so choose.
+
+   2. Create a `.env.local` file in the project root with:
 
    ```dotenv
    NEXT_PUBLIC_SUPABASE_URL=https://your-supabase-project-url.supabase.co
@@ -96,13 +98,16 @@ We welcome contributions of every kind—code, documentation, ideas, and more! T
 
 - **Browse Issues:** Look for issues tagged with `good first issue` or `help wanted`.
 - **Review Our Guidelines:** Please read our [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before submitting any pull requests.
-- **Join the Conversation:** Connect with us on [Discord](https://discord.gg/LLM-Play) and our [GitHub Discussions](https://github.com/LLM-Play/llm-play/discussions).
+- **Join the Conversation:** For questions, ideas, and banter related to all things LLM-Play, check out our [GitHub Discussions](https://github.com/pszjmb1/llm-play/discussions) – we’re excited to hear your thoughts!
 
 Every contribution helps us improve and evolve LLM-Play, so don’t hesitate to share your ideas!
 
 ---
 
 ## Roadmap
+
+We have an evolving roadmap with both short-term and long-term goals. A detailed roadmap is coming soon!
+
 
 **Short Term:**
 
@@ -127,8 +132,8 @@ This project is licensed under the [MIT License](LICENSE).
 ## Connect with Us
 
 - **GitHub:** [github.com/LLM-Play/llm-play](https://github.com/LLM-Play/llm-play)
-- **Discord:** [Join our Discord](https://discord.gg/LLM-Play)
-- **Twitter:** [@LLM_Play](https://twitter.com/LLM_Play)
-- **Email:** contact@llmplay.org
+- **Discord:** Coming soon – join our GitHub Discussions in the meantime!
+- **Twitter:** Coming soon!
+- **Email:** Coming soon!
 
 Together, we’re unlocking the future of AI. Welcome to LLM-Play!
