@@ -12,9 +12,13 @@ We have an evolving roadmap with both short-term and long-term goals. A detailed
       * OpenAI
       * Anthropic
       * Cohere APIs
-- First “Hello World” Tutorial:
-   + A minimal RL challenge (like a simple text-based navigation task) will help onboard new contributors. Make this prominent in the CONTRIBUTING.md.      
+- First “Hello World” [Tutorial](docs/tutorials.md):
+   + A minimal RL challenge (like a simple text-based navigation task) will help onboard new contributors. Make this prominent in the docs/CONTRIBUTING.md.      
+   + Correct any coming soon messages or links to it
 - Refine community voting and result analysis features.
+- GitHub Wiki for Technical Documentation:
+    Use [the Wiki](https://github.com/pszjmb1/llm-play/wiki) for in-depth technical documentation like API references, database schema explanations, or detailed developer guides.
+    Link the Wiki from your GitHub Pages site under a "Developer Docs" section.
 
 ## Long Term
 

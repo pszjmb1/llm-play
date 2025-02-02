@@ -97,7 +97,7 @@ We believe that by working together, we can reveal insights into LLM behavior th
 We welcome contributions of every kind—code, documentation, ideas, and more! To get started:
 
 - **Browse Issues:** Look for issues tagged with `good first issue` or `help wanted`.
-- **Review Our Guidelines:** Please read our [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before submitting any pull requests.
+- **Review Our Guidelines:** Please read our [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) and [docs/CODE_OF_CONDUCT.md](docs/CODE_OF_CONDUCT.md) before submitting any pull requests.
 - **Join the Conversation:** For questions, ideas, and banter related to all things LLM-Play, check out our [GitHub Discussions](https://github.com/pszjmb1/llm-play/discussions) – we’re excited to hear your thoughts!
 
 Every contribution helps us improve and evolve LLM-Play, so don’t hesitate to share your ideas!
