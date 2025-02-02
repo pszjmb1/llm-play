@@ -97,6 +97,14 @@ export const resetPasswordAction = async (formData: FormData) => {
   }
 
   if (password !== confirmPassword) {
+    return encodedRedirect(
+      'error',
+      '/protected/reset-password',
+      'Passwords do not match',
+    );
+  }
+
+  if (password !== confirmPassword) {
     encodedRedirect('error', '/protected/reset-password', 'Passwords do not match');
   }
 

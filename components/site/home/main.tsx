@@ -120,8 +120,8 @@ export default function Main() {
               <a href="https://github.com/pszjmb1/llm-play" className="cta-button">
                 Explore the Repository
               </a>
-              <a href="https://discord.gg/yourinvite" className="cta-button secondary">
-                Join Our Discord
+              <a href="https://github.com/pszjmb1/llm-play/discussions" className="cta-button secondary">
+                Join in on the discussions
               </a>
             </div>
           </div>
