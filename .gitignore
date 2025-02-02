@@ -42,3 +42,6 @@ next-env.d.ts
 
 .aidigestignore
 codebase.md
+
+# Jekyll Wiki pages
+docs/.bundle/

@@ -7,7 +7,7 @@ title: LLM-Play
 
 Welcome to **LLM-Play**, an open-source collaborative gym designed to explore, benchmark, and evolve the capabilities of large language models (LLMs) through reinforcement learning environments.
 
-![LLM-Play Banner](../public/images/banner.svg)
+![LLM-Play Banner](./assets/banner.svg)
 
 ## What is LLM-Play?
 
