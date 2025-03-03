@@ -1,4 +1,3 @@
-// app/api/submit/route.ts
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 import { SubmissionService } from '@/services/submission';
@@ -9,8 +8,24 @@ export async function POST(request: Request) {
   try {
     const json = await request.json();
     
-    // Initialize dependencies
+    // Initialize Supabase client
     const supabase = await createClient();
+
+     // Verify authentication
+     const { data: { session }, error: authError } = await supabase.auth.getSession();
+    
+     if (authError || !session) {
+       console.error('Auth error:', authError);
+       return NextResponse.json(
+         { 
+           error: 'Authentication required',
+           details: authError?.message || 'No valid session found'
+         },
+         { status: 401 }
+       );
+     }
+
+    // Initialize dependencies with authenticated client
     const repository = new SupabaseSubmissionRepository(supabase);
     const service = new SubmissionService(repository);
 
@@ -23,6 +38,8 @@ export async function POST(request: Request) {
     });
 
   } catch (error) {
+    console.error('Submission error:', error);
+    
     if (error instanceof SubmissionError) {
       return NextResponse.json(
         {
@@ -36,9 +53,13 @@ export async function POST(request: Request) {
       );
     }
 
-    console.error('Unexpected error:', error);
+    // Generic error response for any other errors
+    const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
     return NextResponse.json(
-      { error: 'An unexpected error occurred' },
+      { 
+        error: errorMessage,
+        details: error instanceof Error ? error.stack : undefined
+      },
       { status: 500 }
     );
   }

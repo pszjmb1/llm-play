@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { POST } from '@/app/api/submit/route';
-import { SubmissionService } from '@/services/submission';
 import { SubmissionError } from '@/types/submission';
 
 // Create a mock implementation
@@ -13,9 +12,21 @@ vi.mock('@/services/submission', () => ({
   }))
 }));
 
-// Mock Supabase client
+// Mock Supabase client with authentication
 vi.mock('@/utils/supabase/server', () => ({
-  createClient: vi.fn().mockImplementation(() => Promise.resolve({}))
+  createClient: vi.fn().mockImplementation(() => Promise.resolve({
+    auth: {
+      getSession: () => ({
+        data: {
+          session: {
+            user: { id: 'test-user-id' },
+            access_token: 'mock-token'
+          }
+        },
+        error: null
+      })
+    }
+  }))
 }));
 
 describe('POST /api/submit', () => {
