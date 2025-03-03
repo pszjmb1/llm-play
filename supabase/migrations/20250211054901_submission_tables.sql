@@ -63,15 +63,29 @@ CREATE POLICY "Enable read access for all users" ON environments
 COMMENT ON POLICY "Enable read access for all users" ON environments IS 
 'Allows all users (authenticated or not) to view environment submissions.';
 
-CREATE POLICY "Enable insert access for authenticated users" ON environments
-  FOR INSERT WITH CHECK (auth.role() = 'authenticated');
-COMMENT ON POLICY "Enable insert access for authenticated users" ON environments IS 
+CREATE POLICY "Enable insert for authenticated users only" ON environments
+    FOR INSERT WITH CHECK (
+        auth.role() = 'authenticated' 
+        AND auth.uid() = user_id
+    );
+COMMENT ON POLICY "Enable insert for authenticated users only" ON environments IS 
 'Allows only authenticated users to submit new environments.';
 
 CREATE POLICY "Enable read access for all users" ON jobs
   FOR SELECT USING (true);
 COMMENT ON POLICY "Enable read access for all users" ON jobs IS 
-'Allows all users (authenticated or not) to view job statuses and results.';      
+'Allows all users (authenticated or not) to view job statuses and results.';    
+
+CREATE POLICY "Enable job creation for environment owners" ON jobs
+    FOR INSERT WITH CHECK (
+        EXISTS (
+            SELECT 1 FROM environments e 
+            WHERE e.id = environment_id 
+            AND e.user_id = auth.uid()
+        )
+    );
+COMMENT ON POLICY "Enable job creation for environment owners" ON jobs IS 
+'Allows only environment owners to submit new jobs for the given environments.';   
 
 -- Functions
 
@@ -102,3 +116,8 @@ CREATE TRIGGER update_jobs_updated_at
 
 COMMENT ON TRIGGER update_jobs_updated_at ON jobs IS 
 'Automatically updates the updated_at column whenever a job record is modified.';
+
+-- Grants
+GRANT ALL ON public.environments TO authenticated;
+GRANT ALL ON public.environments TO service_role;
+GRANT ALL ON public.environments TO postgres;

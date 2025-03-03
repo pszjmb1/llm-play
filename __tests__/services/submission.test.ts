@@ -1,7 +1,6 @@
-// __tests__/services/submission.test.ts
 import { describe, expect, it, vi } from 'vitest';
 import { SubmissionService } from '@/services/submission';
-import { SubmissionRepository, SubmissionError } from '@/types/submission';
+import { SubmissionRepository, SubmissionError, Environment, Job } from '@/types/submission';
 
 // Mock repository implementation for testing
 class MockSubmissionRepository implements SubmissionRepository {
@@ -14,20 +13,28 @@ describe('SubmissionService', () => {
   const validSubmission = {
     name: 'Test Environment',
     description: 'Test Description that is long enough',
+    file_url: null,
+    metadata: null
   };
 
-  const mockEnvironment = {
+  const mockEnvironment: Environment = {
     id: 'test-id',
-    ...validSubmission,
+    name: validSubmission.name,
+    description: validSubmission.description,
+    file_url: null,
+    metadata: null,
     status: 'pending',
+    user_id: null,
     created_at: new Date().toISOString()
   };
 
-  const mockJob = {
+  const mockJob: Job = {
     id: 'job-id',
     environment_id: 'test-id',
     status: 'queued',
-    created_at: new Date().toISOString()
+    result: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   };
 
   it('successfully processes valid submission', async () => {
@@ -42,7 +49,8 @@ describe('SubmissionService', () => {
     expect(result.job).toEqual(mockJob);
     expect(repository.saveEnvironment).toHaveBeenCalledWith({
       ...validSubmission,
-      status: 'pending'
+      status: 'pending',
+      user_id: null
     });
     expect(repository.createJob).toHaveBeenCalledWith(mockEnvironment.id);
   });
@@ -51,11 +59,15 @@ describe('SubmissionService', () => {
     const repository = new MockSubmissionRepository();
     const service = new SubmissionService(repository);
 
-    await expect(service.submitEnvironment({
+    const invalidSubmission = {
       name: '', // Invalid - too short
-      description: '' // Invalid - too short
-    })).rejects.toThrow(SubmissionError);
+      description: '', // Invalid - too short
+      file_url: null,
+      metadata: null
+    };
 
+    await expect(service.submitEnvironment(invalidSubmission))
+      .rejects.toThrow(SubmissionError);
     expect(repository.saveEnvironment).not.toHaveBeenCalled();
     expect(repository.createJob).not.toHaveBeenCalled();
   });
@@ -67,10 +79,8 @@ describe('SubmissionService', () => {
     );
 
     const service = new SubmissionService(repository);
-
     await expect(service.submitEnvironment(validSubmission))
       .rejects.toThrow(SubmissionError);
-
     expect(repository.createJob).not.toHaveBeenCalled();
   });
 });
