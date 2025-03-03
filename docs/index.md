@@ -49,4 +49,3 @@ We welcome contributions of all kinds—code, documentation, ideas, and more!
 - **Labelled Issues:** Look for `good first issue` or `help wanted` labels in the [Issues](https://github.com/pszjmb1/llm-play/issues) section.
 
 Together, we’re unlocking the future of AI. Welcome to LLM-Play!
-

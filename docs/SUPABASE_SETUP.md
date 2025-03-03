@@ -10,6 +10,7 @@ LLM-Play is designed to work with a Supabase backend. Whether you prefer a hoste
 ## Option 1: Using a Hosted Supabase Instance
 
 1. **Create a New Supabase Project:**
+
    - Visit [database.new](https://database.new) or [Supabase](https://supabase.com) and create a new project.
    - Once your project is running, head to the **Table Editor** to create your database schema.  
      _For example, you can create a table by running the following SQL in the SQL Editor:_
@@ -39,6 +40,7 @@ LLM-Play is designed to work with a Supabase backend. Whether you prefer a hoste
    ```
 
 2. **Set Up Environment Variables:**
+
    - Rename the file `.env.example` (or create a new `.env.local`) in the root of your project.
    - Add your Supabase connection details:
      ```dotenv
@@ -59,6 +61,7 @@ LLM-Play is designed to work with a Supabase backend. Whether you prefer a hoste
 Local development with Supabase allows you to work in a self-contained environment. This can be faster, offline-friendly, and cost-effective.
 
 1. **Install the Supabase CLI:**
+
    - Install it locally as a dev dependency (or globally if preferred):
      ```bash
      npm install supabase --save-dev
@@ -69,6 +72,7 @@ Local development with Supabase allows you to work in a self-contained environme
      ```
 
 2. **Initialize the Supabase Project:**
+
    - In the root of your LLM-Play repository, run:
      ```bash
      npx supabase init
@@ -76,6 +80,7 @@ Local development with Supabase allows you to work in a self-contained environme
    - This command creates a `supabase` folder with configuration files and migration templates.
 
 3. **Start the Local Supabase Stack:**
+
    - Run:
      ```bash
      npx supabase start
@@ -83,6 +88,7 @@ Local development with Supabase allows you to work in a self-contained environme
    - Your local Supabase instance will start (typically on `http://localhost:54323` for the dashboard and on another port for the API). Refer to the CLI output for exact details.
 
 4. **Update Your Environment Variables:**
+
    - In your `.env.local`, update the Supabase variables to use your local instance’s details:
      ```dotenv
      NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321  # or the URL provided by the CLI
