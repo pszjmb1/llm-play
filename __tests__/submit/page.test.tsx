@@ -15,22 +15,54 @@ vi.mock('@/hooks/use-toast', () => ({
   })
 }));
 
+// Mock Supabase client and auth
+const mockGetSession = vi.fn();
+vi.mock('@/utils/supabase/client', () => ({
+  createClient: () => ({
+    auth: {
+      getSession: mockGetSession
+    }
+  })
+}));
+
+// Mock session response
+const mockSession = {
+  data: {
+    session: {
+      user: { id: 'test-user-id' },
+      access_token: 'mock-token'
+    }
+  },
+  error: null
+};
+
 describe('SubmitPage', () => {
   beforeEach(() => {
     mockFetch.mockReset();
     mockToast.mockReset();
+    
+    // Default to authenticated session for all tests
+    mockGetSession.mockResolvedValue(mockSession);
   });
 
-  it('renders form fields', () => {
+  it('renders form fields', async () => {
     render(<SubmitPage />);
     
-    expect(screen.getByLabelText(/environment name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/description/i)).toBeInTheDocument();
-    expect(screen.getByTestId('submit-button')).toBeInTheDocument();
+    // Wait for the form to be rendered after authentication check
+    await waitFor(() => {
+      expect(screen.getByLabelText(/environment name/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/description/i)).toBeInTheDocument();
+      expect(screen.getByTestId('submit-button')).toBeInTheDocument();
+    });
   });
 
   it('validates required fields', async () => {
     render(<SubmitPage />);
+    
+    // Wait for the form to render
+    await waitFor(() => {
+      expect(screen.getByTestId('submit-button')).toBeInTheDocument();
+    });
     
     const submitButton = screen.getByTestId('submit-button');
     fireEvent.click(submitButton);
@@ -59,6 +91,11 @@ describe('SubmitPage', () => {
 
     render(<SubmitPage />);
     
+    // Wait for the form to render
+    await waitFor(() => {
+      expect(screen.getByLabelText(/environment name/i)).toBeInTheDocument();
+    });
+    
     // Fill out form
     fireEvent.change(screen.getByLabelText(/environment name/i), {
       target: { value: 'Test Environment' },
@@ -82,7 +119,10 @@ describe('SubmitPage', () => {
     await waitFor(() => {
       expect(mockFetch).toHaveBeenCalledWith('/api/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${mockSession.data.session.access_token}`
+        },
         body: JSON.stringify({
           name: 'Test Environment',
           description: 'This is a test environment description'
@@ -115,6 +155,11 @@ describe('SubmitPage', () => {
 
     render(<SubmitPage />);
     
+    // Wait for the form to render
+    await waitFor(() => {
+      expect(screen.getByLabelText(/environment name/i)).toBeInTheDocument();
+    });
+    
     // Fill out form
     fireEvent.change(screen.getByLabelText(/environment name/i), {
       target: { value: 'Test Environment' },
@@ -142,6 +187,11 @@ describe('SubmitPage', () => {
     mockFetch.mockRejectedValueOnce(new Error('Network error'));
 
     render(<SubmitPage />);
+    
+    // Wait for the form to render
+    await waitFor(() => {
+      expect(screen.getByLabelText(/environment name/i)).toBeInTheDocument();
+    });
     
     // Fill out form
     fireEvent.change(screen.getByLabelText(/environment name/i), {
