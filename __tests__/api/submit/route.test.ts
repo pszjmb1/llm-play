@@ -45,7 +45,16 @@ describe('POST /api/submit', () => {
 
     const response = await POST(new Request('http://localhost:3000/api/submit', {
       method: 'POST',
-      body: JSON.stringify({ name: 'Test', description: 'Test desc' })
+      body: JSON.stringify({ 
+        name: 'Test', 
+        description: 'Test description for the environment', 
+        metadata: {
+          environmentType: 'text-game',
+          difficultyLevel: 'medium',
+          tags: ['test'],
+          successCriteria: 'The environment should execute successfully'
+        }
+      })
     }));
 
     const json = await response.json();
@@ -80,7 +89,16 @@ describe('POST /api/submit', () => {
 
     const response = await POST(new Request('http://localhost:3000/api/submit', {
       method: 'POST',
-      body: JSON.stringify({ name: 'Test', description: 'Test desc' })
+      body: JSON.stringify({ 
+        name: 'Test', 
+        description: 'Test description for the environment', 
+        metadata: {
+          environmentType: 'text-game',
+          difficultyLevel: 'medium',
+          tags: ['test'],
+          successCriteria: 'The environment should execute successfully'
+        }
+      })
     }));
 
     const json = await response.json();

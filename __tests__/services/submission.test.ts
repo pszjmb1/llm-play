@@ -9,12 +9,17 @@ class MockSubmissionRepository implements SubmissionRepository {
 }
 
 describe('SubmissionService', () => {
-  // Test data
+  // Test data with updated schema
   const validSubmission = {
     name: 'Test Environment',
     description: 'Test Description that is long enough',
     file_url: null,
-    metadata: null
+    metadata: {
+      environmentType: 'text-game',
+      difficultyLevel: 'medium',
+      tags: ['test', 'example'],
+      successCriteria: 'The environment should successfully execute and return results'
+    }
   };
 
   const mockEnvironment: Environment = {
@@ -22,7 +27,7 @@ describe('SubmissionService', () => {
     name: validSubmission.name,
     description: validSubmission.description,
     file_url: null,
-    metadata: null,
+    metadata: validSubmission.metadata,
     status: 'pending',
     user_id: null,
     created_at: new Date().toISOString()
@@ -62,8 +67,8 @@ describe('SubmissionService', () => {
     const invalidSubmission = {
       name: '', // Invalid - too short
       description: '', // Invalid - too short
-      file_url: null,
-      metadata: null
+      file_url: null
+      // Missing required metadata property
     };
 
     await expect(service.submitEnvironment(invalidSubmission))
