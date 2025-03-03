@@ -48,8 +48,12 @@ ON CONFLICT (id) DO UPDATE SET
     'text/yaml'
   ];
 
-COMMENT ON ROW storage.buckets WHERE id = 'environments' IS 
-'Storage bucket for environment files uploaded by users. Contains code files, configuration files, and other assets needed for environments to function. All files are publicly readable but write access is restricted to authenticated users.';
+-- Add bucket description as a regular comment instead
+COMMENT ON TABLE storage.buckets IS 
+'Contains storage buckets for the application.
+The environments bucket contains environment files uploaded by users, including code files, 
+configuration files, and other assets needed for environments to function. 
+All files are publicly readable but write access is restricted to authenticated users.';
 
 -- Create bucket policy for READ access (public)
 CREATE POLICY "Environment files are publicly accessible"
