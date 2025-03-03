@@ -2,10 +2,10 @@ import { z } from 'zod';
 
 // Status enums
 export const environmentStatusEnum = ['pending', 'processing', 'completed', 'failed'] as const;
-export type EnvironmentStatus = typeof environmentStatusEnum[number];
+export type EnvironmentStatus = (typeof environmentStatusEnum)[number];
 
 export const jobStatusEnum = ['queued', 'processing', 'completed', 'failed'] as const;
-export type JobStatus = typeof jobStatusEnum[number];
+export type JobStatus = (typeof jobStatusEnum)[number];
 
 // Environment type categorization
 export const environmentTypeEnum = [
@@ -15,13 +15,13 @@ export const environmentTypeEnum = [
   'code-generation',
   'instruction-following',
   'agent-task',
-  'other'
+  'other',
 ] as const;
-export type EnvironmentType = typeof environmentTypeEnum[number];
+export type EnvironmentType = (typeof environmentTypeEnum)[number];
 
 // Difficulty levels
 export const difficultyLevelEnum = ['easy', 'medium', 'hard', 'expert'] as const;
-export type DifficultyLevel = typeof difficultyLevelEnum[number];
+export type DifficultyLevel = (typeof difficultyLevelEnum)[number];
 
 // Metadata schema with structured fields
 export const metadataSchema = z.object({
@@ -35,7 +35,10 @@ export const metadataSchema = z.object({
 // File upload schema
 export const fileUploadSchema = z.object({
   originalName: z.string(),
-  fileSize: z.number().positive('File size must be positive').max(10 * 1024 * 1024, 'File too large (max 10MB)'),
+  fileSize: z
+    .number()
+    .positive('File size must be positive')
+    .max(10 * 1024 * 1024, 'File too large (max 10MB)'),
   fileType: z.string(),
   storageKey: z.string().optional(),
   uploadStatus: z.enum(['pending', 'uploading', 'completed', 'failed']).optional(),
@@ -43,7 +46,10 @@ export const fileUploadSchema = z.object({
 
 // Main environment submission schema
 export const environmentSubmissionSchema = z.object({
-  name: z.string().min(3, 'Name must be at least 3 characters').max(100, 'Name must be at most 100 characters'),
+  name: z
+    .string()
+    .min(3, 'Name must be at least 3 characters')
+    .max(100, 'Name must be at most 100 characters'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
   // For uploads, we'll track the file info before it's fully processed
   fileUpload: fileUploadSchema.optional(),
@@ -98,7 +104,7 @@ export class SubmissionError extends Error {
   constructor(
     message: string,
     public readonly code: 'VALIDATION' | 'DATABASE' | 'AUTH' | 'FILE_UPLOAD' | 'UNKNOWN',
-    public readonly details?: any
+    public readonly details?: any,
   ) {
     super(message);
     this.name = 'SubmissionError';
@@ -108,9 +114,12 @@ export class SubmissionError extends Error {
 // Helper constants for file validation
 export const ALLOWED_FILE_TYPES = [
   // Python files
-  'text/x-python', 'application/x-python', 'text/x-python-script',
+  'text/x-python',
+  'application/x-python',
+  'text/x-python-script',
   // JavaScript files
-  'application/javascript', 'text/javascript',
+  'application/javascript',
+  'text/javascript',
   // JSON files
   'application/json',
   // Text files
@@ -118,7 +127,8 @@ export const ALLOWED_FILE_TYPES = [
   // Markdown files
   'text/markdown',
   // YAML files
-  'application/x-yaml', 'text/yaml',
+  'application/x-yaml',
+  'text/yaml',
 ];
 
 export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -162,61 +172,62 @@ export enum SubmissionStep {
   FileUpload = 'file-upload',
   Metadata = 'metadata',
   Review = 'review',
-  Complete = 'complete'
+  Complete = 'complete',
 }
 
 // Type for validating the entire submission
 export const validateSubmission = (data: Partial<EnvironmentSubmission>): FileValidationResult => {
   const errors: string[] = [];
-  
+
   // Validate name and description
   if (!data.name || data.name.length < 3) {
     errors.push('Name must be at least 3 characters');
   }
-  
+
   if (!data.description || data.description.length < 10) {
     errors.push('Description must be at least 10 characters');
   }
-  
+
   // For backward compatibility with existing tests
   // In the future we'll enforce file uploads and metadata
   if (!data.fileUpload && !data.file_url && process.env.NODE_ENV === 'production') {
     errors.push('Either file upload or file URL should be provided');
   }
-  
+
   if (data.fileUpload) {
     if (!isValidFileSize(data.fileUpload.fileSize)) {
-      errors.push(`File size must be between 1 byte and ${MAX_FILE_SIZE/1024/1024}MB`);
+      errors.push(`File size must be between 1 byte and ${MAX_FILE_SIZE / 1024 / 1024}MB`);
     }
-    
+
     if (!isValidExtension(data.fileUpload.originalName)) {
       errors.push('Invalid file extension. Allowed: .py, .js, .json, .txt, .md, .yaml, .yml');
     }
   }
-  
+
   // Validate metadata if it exists and is of the expected structure
   if (data.metadata && typeof data.metadata === 'object' && 'environmentType' in data.metadata) {
-    const { environmentType, difficultyLevel, tags, successCriteria } = data.metadata as EnvironmentMetadata;
-    
+    const { environmentType, difficultyLevel, tags, successCriteria } =
+      data.metadata as EnvironmentMetadata;
+
     if (!environmentType) {
       errors.push('Environment type is required');
     }
-    
+
     if (!difficultyLevel) {
       errors.push('Difficulty level is required');
     }
-    
+
     if (!tags || tags.length === 0) {
       errors.push('At least one tag is required');
     }
-    
+
     if (!successCriteria || successCriteria.length < 10) {
       errors.push('Success criteria must be at least 10 characters');
     }
   }
-  
+
   return {
     isValid: errors.length === 0,
-    errors
+    errors,
   };
 };

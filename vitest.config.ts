@@ -1,6 +1,6 @@
-import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [react()],
@@ -11,11 +11,7 @@ export default defineConfig({
     include: ['**/*.test.tsx', '**/*.test.ts'],
     coverage: {
       reporter: ['text', 'json', 'html'],
-      exclude: [
-        'node_modules/',
-        'vitest.config.ts',
-        'vitest.setup.ts',
-      ],
+      exclude: ['node_modules/', 'vitest.config.ts', 'vitest.setup.ts'],
     },
   },
   resolve: {
@@ -23,4 +19,4 @@ export default defineConfig({
       '@': resolve(__dirname, './'),
     },
   },
-})
+});

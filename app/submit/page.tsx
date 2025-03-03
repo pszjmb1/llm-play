@@ -4,53 +4,65 @@ import { useEffect, useState, useMemo } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, FormProvider } from 'react-hook-form';
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form';
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  FormDescription,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { 
-  EnvironmentSubmission, 
-  environmentSubmissionSchema, 
-  SubmissionStep, 
+import {
+  EnvironmentSubmission,
+  environmentSubmissionSchema,
+  SubmissionStep,
   environmentTypeEnum,
   difficultyLevelEnum,
   EnvironmentType,
   DifficultyLevel,
-  FileUpload
+  FileUpload,
 } from '@/types/submission';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { MultiStepForm, Step } from '@/components/ui/multi-step-form';
 import { FileInput } from '@/components/ui/file-input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { TagInput } from '@/components/ui/tag-input';
 import { uploadFile } from '@/services/file-upload';
-import { Check, AlertCircle, FileText, Hash, BarChart3, Tag } from 'lucide-react';
+import { Check, AlertCircle, FileText, Hash, Tag } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 // Form steps definition
 const FORM_STEPS: Step[] = [
   {
     id: SubmissionStep.BasicInfo,
-    label: "Basic Info",
-    description: "Name and description",
+    label: 'Basic Info',
+    description: 'Name and description',
   },
   {
     id: SubmissionStep.FileUpload,
-    label: "Environment File",
-    description: "Upload environment code",
+    label: 'Environment File',
+    description: 'Upload environment code',
   },
   {
     id: SubmissionStep.Metadata,
-    label: "Metadata",
-    description: "Type, difficulty, tags",
+    label: 'Metadata',
+    description: 'Type, difficulty, tags',
   },
   {
     id: SubmissionStep.Review,
-    label: "Review",
-    description: "Verify submission",
-  }
+    label: 'Review',
+    description: 'Verify submission',
+  },
 ];
 
 export default function SubmitPage() {
@@ -82,15 +94,17 @@ export default function SubmitPage() {
   useEffect(() => {
     async function checkAuth() {
       try {
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
+        const {
+          data: { session },
+          error,
+        } = await supabase.auth.getSession();
+
         if (error) {
           console.error('Auth check error:', error);
           setAuthError('Failed to check authentication status');
         } else if (!session) {
           setAuthError('Please sign in to submit an environment');
         }
-        
       } catch (error) {
         console.error('Auth check error:', error);
         setAuthError('Failed to check authentication status');
@@ -100,7 +114,7 @@ export default function SubmitPage() {
     }
 
     checkAuth();
-  }, []);
+  }, [supabase.auth]);
 
   // Handle file uploads
   const handleFileUpload = async (file: File): Promise<string> => {
@@ -119,43 +133,51 @@ export default function SubmitPage() {
   const stepValidation = useMemo(() => {
     const formValues = form.getValues();
     const formErrors = form.formState.errors;
-    
+
     return {
-      [SubmissionStep.BasicInfo]: !formErrors.name && !formErrors.description && 
-        !!formValues.name && !!formValues.description,
+      [SubmissionStep.BasicInfo]:
+        !formErrors.name &&
+        !formErrors.description &&
+        !!formValues.name &&
+        !!formValues.description,
       [SubmissionStep.FileUpload]: true, // File is optional for now
-      [SubmissionStep.Metadata]: !formErrors.metadata && !!formValues.metadata?.environmentType &&
-        !!formValues.metadata?.difficultyLevel && !!formValues.metadata?.successCriteria &&
+      [SubmissionStep.Metadata]:
+        !formErrors.metadata &&
+        !!formValues.metadata?.environmentType &&
+        !!formValues.metadata?.difficultyLevel &&
+        !!formValues.metadata?.successCriteria &&
         formValues.metadata.tags.length > 0,
       [SubmissionStep.Review]: true,
     };
-  }, [form.formState.errors, form.watch()]);
+  }, [form]);
 
   // Handle form submission
   const onSubmit = form.handleSubmit(async (data: EnvironmentSubmission) => {
     if (isSubmitting) return;
-    
+
     try {
       setIsSubmitting(true);
 
       // Get the current session
-      const { data: { session } } = await supabase.auth.getSession();
-      
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
       if (!session) {
         throw new Error('Please sign in to submit an environment');
       }
 
       // Convert fileUpload to file_url if needed
-      let finalData = { ...data };
+      const finalData = { ...data };
       if (data.fileUpload?.storageKey) {
         finalData.file_url = data.fileUpload.storageKey;
       }
 
       const response = await fetch('/api/submit', {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`
+          Authorization: `Bearer ${session.access_token}`,
         },
         body: JSON.stringify(finalData),
       });
@@ -186,9 +208,11 @@ export default function SubmitPage() {
   });
 
   if (isLoading) {
-    return <div className="flex justify-center items-center min-h-[400px]">
-      <p>Loading...</p>
-    </div>;
+    return (
+      <div className="flex min-h-[400px] items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   // Get current step content
@@ -197,7 +221,7 @@ export default function SubmitPage() {
       case 0: // Basic Info
         return (
           <>
-            <h2 className="text-xl font-semibold mb-4">Environment Information</h2>
+            <h2 className="mb-4 text-xl font-semibold">Environment Information</h2>
             <FormField
               control={form.control}
               name="name"
@@ -205,15 +229,13 @@ export default function SubmitPage() {
                 <FormItem>
                   <FormLabel>Environment Name</FormLabel>
                   <FormControl>
-                    <Input 
-                      {...field} 
+                    <Input
+                      {...field}
                       disabled={isSubmitting || !!authError}
-                      placeholder="Enter environment name" 
+                      placeholder="Enter environment name"
                     />
                   </FormControl>
-                  <FormDescription>
-                    A clear and concise name for your environment
-                  </FormDescription>
+                  <FormDescription>A clear and concise name for your environment</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -234,7 +256,8 @@ export default function SubmitPage() {
                     />
                   </FormControl>
                   <FormDescription>
-                    Explain what your environment tests or measures, how it works, and why it's interesting
+                    Explain what your environment tests or measures, how it works, and why it&apos;s
+                    interesting
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -242,11 +265,11 @@ export default function SubmitPage() {
             />
           </>
         );
-      
+
       case 1: // File Upload
         return (
           <>
-            <h2 className="text-xl font-semibold mb-4">Environment File</h2>
+            <h2 className="mb-4 text-xl font-semibold">Environment File</h2>
             <FormField
               control={form.control}
               name="fileUpload"
@@ -259,11 +282,12 @@ export default function SubmitPage() {
                       onChange={field.onChange}
                       onUpload={handleFileUpload}
                       disabled={isSubmitting || !!authError}
-                      error={fileUploadError || ""}
+                      error={fileUploadError || ''}
                     />
                   </FormControl>
                   <FormDescription>
-                    Upload the code for your environment (Python, JavaScript, or JSON files preferred)
+                    Upload the code for your environment (Python, JavaScript, or JSON files
+                    preferred)
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -271,13 +295,13 @@ export default function SubmitPage() {
             />
           </>
         );
-      
+
       case 2: // Metadata
         return (
           <>
-            <h2 className="text-xl font-semibold mb-4">Environment Metadata</h2>
-            
-            <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+            <h2 className="mb-4 text-xl font-semibold">Environment Metadata</h2>
+
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}
                 name="metadata.environmentType"
@@ -297,9 +321,10 @@ export default function SubmitPage() {
                       <SelectContent>
                         {environmentTypeEnum.map((type) => (
                           <SelectItem key={type} value={type}>
-                            {type.split('-').map(word => 
-                              word.charAt(0).toUpperCase() + word.slice(1)
-                            ).join(' ')}
+                            {type
+                              .split('-')
+                              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                              .join(' ')}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -413,12 +438,12 @@ export default function SubmitPage() {
             />
           </>
         );
-      
+
       case 3: // Review
         const formValues = form.getValues();
         return (
           <>
-            <h2 className="text-xl font-semibold mb-4">Review Submission</h2>
+            <h2 className="mb-4 text-xl font-semibold">Review Submission</h2>
             <div className="space-y-6">
               <Card>
                 <CardHeader>
@@ -434,7 +459,7 @@ export default function SubmitPage() {
                   </div>
                   <div>
                     <h4 className="text-sm font-medium">Description</h4>
-                    <p className="text-sm whitespace-pre-wrap">{formValues.description}</p>
+                    <p className="whitespace-pre-wrap text-sm">{formValues.description}</p>
                   </div>
                 </CardContent>
               </Card>
@@ -481,32 +506,32 @@ export default function SubmitPage() {
                     </div>
                     <div>
                       <h4 className="text-sm font-medium">Difficulty Level</h4>
-                      <p className="capitalize">
-                        {formValues.metadata?.difficultyLevel}
-                      </p>
+                      <p className="capitalize">{formValues.metadata?.difficultyLevel}</p>
                     </div>
                   </div>
-                  
+
                   <div>
                     <h4 className="text-sm font-medium">Tags</h4>
-                    <div className="flex flex-wrap gap-2 mt-1">
-                      {formValues.metadata?.tags.map(tag => (
-                        <Badge key={tag} variant="secondary">{tag}</Badge>
+                    <div className="mt-1 flex flex-wrap gap-2">
+                      {formValues.metadata?.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary">
+                          {tag}
+                        </Badge>
                       ))}
                     </div>
                   </div>
-                  
+
                   <div>
                     <h4 className="text-sm font-medium">Success Criteria</h4>
-                    <p className="text-sm whitespace-pre-wrap">
+                    <p className="whitespace-pre-wrap text-sm">
                       {formValues.metadata?.successCriteria}
                     </p>
                   </div>
-                  
+
                   {formValues.metadata?.additionalNotes && (
                     <div>
                       <h4 className="text-sm font-medium">Additional Notes</h4>
-                      <p className="text-sm whitespace-pre-wrap">
+                      <p className="whitespace-pre-wrap text-sm">
                         {formValues.metadata.additionalNotes}
                       </p>
                     </div>
@@ -516,7 +541,7 @@ export default function SubmitPage() {
             </div>
           </>
         );
-      
+
       default:
         return null;
     }
@@ -546,11 +571,11 @@ export default function SubmitPage() {
 
   return (
     <div className="mx-auto max-w-4xl p-4">
-      <h1 className="text-3xl font-bold mb-4">Submit Environment</h1>
-      <p className="text-muted-foreground mb-8">
+      <h1 className="mb-4 text-3xl font-bold">Submit Environment</h1>
+      <p className="mb-8 text-muted-foreground">
         Share your reinforcement learning environment with the community to test language models.
       </p>
-      
+
       {authError && (
         <Alert variant="destructive" className="mb-6">
           <AlertDescription>{authError}</AlertDescription>

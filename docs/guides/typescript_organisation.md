@@ -7,10 +7,13 @@ This document outlines the TypeScript organization strategy for LLM-Play, focusi
 ## Core Principles
 
 ### Co-location First
+
 Types should initially reside alongside their components or features. Only extract types when there's a clear need for sharing across multiple parts of the application.
 
 ### Domain-Driven Organization
+
 Types are organized based on their domain within the LLM-Play ecosystem:
+
 - Environment definitions
 - Testing infrastructure
 - Analytics and results
@@ -19,16 +22,19 @@ Types are organized based on their domain within the LLM-Play ecosystem:
 ## Type Sharing Guidelines
 
 1. **When to Create Shared Types**
+
    - Types used across multiple components
    - Core domain types that represent key entities
    - Types that define public interfaces or APIs
 
 2. **When to Keep Types Co-located**
+
    - Component-specific prop types
    - Local state interfaces
    - Helper types used only within a single feature
 
 3. **Type Extension Practices**
+
    ```typescript
    // Extending core types for specific features
    interface BaseEnvironment {
@@ -45,7 +51,9 @@ Types are organized based on their domain within the LLM-Play ecosystem:
 ## Schema Organization
 
 ### Co-location with Types
+
 From the [Zod Docs](https://zod.dev/?id=introduction):
+
 ```
 Zod is a TypeScript-first schema declaration and validation library. I'm using the term "schema" to broadly refer to any data type, from a simple string to a complex nested object.
 
@@ -53,6 +61,7 @@ Zod is designed to be as developer-friendly as possible. The goal is to eliminat
 ```
 
 [Zod](https://zod.dev/) schemas should be co-located with their corresponding TypeScript types. This approach:
+
 - Maintains a single source of truth
 - Makes it easier to keep types and validations in sync
 - Improves discoverability
@@ -81,7 +90,7 @@ export const environmentSchema = z.object({
   description: z.string().min(10, 'Description must be at least 10 characters'),
   version: z.string(),
   metadata: z.record(z.any()),
-  status: z.enum(['pending', 'processing', 'completed', 'failed'])
+  status: z.enum(['pending', 'processing', 'completed', 'failed']),
 });
 
 // Helper type derived from schema
@@ -89,6 +98,7 @@ export type EnvironmentFromSchema = z.infer<typeof environmentSchema>;
 ```
 
 ### Schema Naming Conventions
+
 - Suffix schema objects with `Schema` (e.g., `environmentSchema`)
 - For types derived from schemas, use the suffix `FromSchema` (e.g., `EnvironmentFromSchema`)
 - Keep schema property names identical to interface property names
@@ -96,6 +106,7 @@ export type EnvironmentFromSchema = z.infer<typeof environmentSchema>;
 ### Schema Organization Patterns
 
 1. **Basic Co-location**
+
 ```typescript
 // types/submission.ts
 export interface Submission { ... }
@@ -103,6 +114,7 @@ export const submissionSchema = z.object({ ... });
 ```
 
 2. **Nested Schemas**
+
 ```typescript
 // types/test-execution.ts
 export interface TestConfig { ... }
@@ -116,6 +128,7 @@ export const testExecutionSchema = z.object({
 ```
 
 3. **Shared Schema Components**
+
 ```typescript
 // types/common.ts
 export const commonSchemas = {
@@ -137,17 +150,20 @@ export const environmentSchema = z.object({
 ## Best Practices
 
 1. **Naming Conventions**
+
    - Use PascalCase for interface and type names
    - Use descriptive, domain-specific names
    - Prefix interfaces with 'I' only when necessary for clarity
 
 2. **Type Safety**
+
    - Use strict type checking
    - Avoid `any` types
    - Leverage union types for finite sets of values
    - Use generics for reusable type patterns
 
 3. **Documentation**
+
    - Include JSDoc comments for complex types
    - Document type parameters and constraints
    - Provide examples for non-obvious use cases
@@ -199,12 +215,14 @@ const TestExecution: React.FC<TestExecutionProps> = ({
 ## Maintenance and Evolution
 
 1. **Regular Type Audits**
+
    - Review and refactor types periodically
    - Remove unused types
    - Consolidate similar types
    - Update documentation
 
 2. **Version Control**
+
    - Include type changes in PR descriptions
    - Document breaking type changes
    - Maintain backwards compatibility when possible

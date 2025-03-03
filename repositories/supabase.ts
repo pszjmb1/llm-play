@@ -1,12 +1,12 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 import { Database } from '@/types/database.types';
-import { 
-  Environment, 
-  Job, 
+import {
+  Environment,
+  Job,
   SubmissionRepository,
   SubmissionError,
   EnvironmentStatus,
-  JobStatus
+  JobStatus,
 } from '@/types/submission';
 
 type SupabaseClientType = SupabaseClient<Database>;
@@ -22,8 +22,10 @@ export class SupabaseSubmissionRepository implements SubmissionRepository {
     }
 
     // Ensure metadata is a Record or null
-    const metadata = dbEnv.metadata ? 
-      (typeof dbEnv.metadata === 'object' ? dbEnv.metadata as Record<string, any> : null) 
+    const metadata = dbEnv.metadata
+      ? typeof dbEnv.metadata === 'object'
+        ? (dbEnv.metadata as Record<string, any>)
+        : null
       : null;
 
     return {
@@ -34,29 +36,26 @@ export class SupabaseSubmissionRepository implements SubmissionRepository {
       metadata,
       status,
       user_id: dbEnv.user_id,
-      created_at: dbEnv.created_at
+      created_at: dbEnv.created_at,
     };
   }
 
   async saveEnvironment(data: Omit<Environment, 'id' | 'created_at'>): Promise<Environment> {
     try {
       // Get current user's ID
-      const { data: { user }, error: authError } = await this.client.auth.getUser();
-      
+      const {
+        data: { user },
+        error: authError,
+      } = await this.client.auth.getUser();
+
       if (authError) {
-        throw new SubmissionError(
-          'Authentication required',
-          'AUTH',
-          authError
-        );
+        throw new SubmissionError('Authentication required', 'AUTH', authError);
       }
 
       if (!user) {
-        throw new SubmissionError(
-          'Authentication required',
-          'AUTH',
-          { message: 'No authenticated user found' }
-        );
+        throw new SubmissionError('Authentication required', 'AUTH', {
+          message: 'No authenticated user found',
+        });
       }
 
       // Prepare the insert data
@@ -66,7 +65,7 @@ export class SupabaseSubmissionRepository implements SubmissionRepository {
         file_url: data.file_url || null,
         metadata: data.metadata || null,
         status: data.status || 'pending',
-        user_id: user.id
+        user_id: user.id,
       };
 
       // Insert the environment
@@ -80,15 +79,12 @@ export class SupabaseSubmissionRepository implements SubmissionRepository {
         throw new SubmissionError(
           insertError.message || 'Failed to save environment',
           'DATABASE',
-          insertError
+          insertError,
         );
       }
 
       if (!environment) {
-        throw new SubmissionError(
-          'No environment data returned',
-          'DATABASE'
-        );
+        throw new SubmissionError('No environment data returned', 'DATABASE');
       }
 
       return this.mapDbEnvironmentToDomain(environment);
@@ -97,11 +93,7 @@ export class SupabaseSubmissionRepository implements SubmissionRepository {
         throw error;
       }
 
-      throw new SubmissionError(
-        'Failed to save environment',
-        'DATABASE',
-        error
-      );
+      throw new SubmissionError('Failed to save environment', 'DATABASE', error);
     }
   }
 
@@ -112,24 +104,17 @@ export class SupabaseSubmissionRepository implements SubmissionRepository {
         .insert({
           environment_id: environmentId,
           status: 'queued' as JobStatus,
-          result: null
+          result: null,
         })
         .select()
         .single();
 
       if (error) {
-        throw new SubmissionError(
-          'Failed to create job',
-          'DATABASE',
-          error
-        );
+        throw new SubmissionError('Failed to create job', 'DATABASE', error);
       }
 
       if (!job) {
-        throw new SubmissionError(
-          'No job data returned',
-          'DATABASE'
-        );
+        throw new SubmissionError('No job data returned', 'DATABASE');
       }
 
       return {
@@ -138,17 +123,13 @@ export class SupabaseSubmissionRepository implements SubmissionRepository {
         status: job.status as JobStatus,
         result: job.result,
         created_at: job.created_at,
-        updated_at: job.updated_at
+        updated_at: job.updated_at,
       };
     } catch (error) {
       if (error instanceof SubmissionError) {
         throw error;
       }
-      throw new SubmissionError(
-        'Failed to create job',
-        'DATABASE',
-        error
-      );
+      throw new SubmissionError('Failed to create job', 'DATABASE', error);
     }
   }
 }

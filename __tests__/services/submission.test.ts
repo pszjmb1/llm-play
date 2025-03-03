@@ -18,8 +18,8 @@ describe('SubmissionService', () => {
       environmentType: 'text-game',
       difficultyLevel: 'medium',
       tags: ['test', 'example'],
-      successCriteria: 'The environment should successfully execute and return results'
-    }
+      successCriteria: 'The environment should successfully execute and return results',
+    },
   };
 
   const mockEnvironment: Environment = {
@@ -30,7 +30,7 @@ describe('SubmissionService', () => {
     metadata: validSubmission.metadata,
     status: 'pending',
     user_id: null,
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
   };
 
   const mockJob: Job = {
@@ -39,7 +39,7 @@ describe('SubmissionService', () => {
     status: 'queued',
     result: null,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   };
 
   it('successfully processes valid submission', async () => {
@@ -55,7 +55,7 @@ describe('SubmissionService', () => {
     expect(repository.saveEnvironment).toHaveBeenCalledWith({
       ...validSubmission,
       status: 'pending',
-      user_id: null
+      user_id: null,
     });
     expect(repository.createJob).toHaveBeenCalledWith(mockEnvironment.id);
   });
@@ -67,25 +67,21 @@ describe('SubmissionService', () => {
     const invalidSubmission = {
       name: '', // Invalid - too short
       description: '', // Invalid - too short
-      file_url: null
+      file_url: null,
       // Missing required metadata property
     };
 
-    await expect(service.submitEnvironment(invalidSubmission))
-      .rejects.toThrow(SubmissionError);
+    await expect(service.submitEnvironment(invalidSubmission)).rejects.toThrow(SubmissionError);
     expect(repository.saveEnvironment).not.toHaveBeenCalled();
     expect(repository.createJob).not.toHaveBeenCalled();
   });
 
   it('handles database errors properly', async () => {
     const repository = new MockSubmissionRepository();
-    repository.saveEnvironment.mockRejectedValue(
-      new SubmissionError('Database error', 'DATABASE')
-    );
+    repository.saveEnvironment.mockRejectedValue(new SubmissionError('Database error', 'DATABASE'));
 
     const service = new SubmissionService(repository);
-    await expect(service.submitEnvironment(validSubmission))
-      .rejects.toThrow(SubmissionError);
+    await expect(service.submitEnvironment(validSubmission)).rejects.toThrow(SubmissionError);
     expect(repository.createJob).not.toHaveBeenCalled();
   });
 });

@@ -75,6 +75,7 @@ We believe that by working together, we can reveal insights into LLM behavior th
    ```
 
 3. **Set Up Supabase and Environment Variables:**
+
    1. LLM-Play is designed to work with a Supabase backend. Follow the [Supabase Setup guide](docs/SUPABASE_SETUP.md) to run a hosted Supabase instance (with free or costed plans) or run Supabase locally (entirely free). Note that our open source codebase includes migration files and configuration templates so that anyone can easily set up their own backend, and even do so without Supabase if they so choose.
 
    2. Create a `.env.local` file in the project root with:

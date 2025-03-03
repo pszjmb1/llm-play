@@ -1,16 +1,16 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { Badge } from "./badge"
-import { X } from "lucide-react"
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { Badge } from './badge';
+import { X } from 'lucide-react';
 
 export interface TagInputProps {
-  value: string[]
-  onChange: (value: string[]) => void
-  maxTags?: number
-  placeholder?: string
-  disabled?: boolean
-  className?: string
-  maxTagLength?: number
+  value: string[];
+  onChange: (value: string[]) => void;
+  maxTags?: number;
+  placeholder?: string;
+  disabled?: boolean;
+  className?: string;
+  maxTagLength?: number;
 }
 
 export function TagInput({
@@ -18,57 +18,57 @@ export function TagInput({
   onChange,
   maxTags = 5,
   maxTagLength = 20,
-  placeholder = "Enter tags...",
+  placeholder = 'Enter tags...',
   disabled = false,
   className,
 }: TagInputProps) {
-  const [inputValue, setInputValue] = React.useState<string>("")
-  const inputRef = React.useRef<HTMLInputElement>(null)
-  const containerRef = React.useRef<HTMLDivElement>(null)
+  const [inputValue, setInputValue] = React.useState<string>('');
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
 
   const addTag = (tag: string) => {
-    const trimmedTag = tag.trim()
-    
+    const trimmedTag = tag.trim();
+
     if (!trimmedTag || value.includes(trimmedTag) || value.length >= maxTags) {
-      return
+      return;
     }
-    
+
     // Limit tag length
-    const processedTag = trimmedTag.slice(0, maxTagLength)
-    
-    onChange([...value, processedTag])
-    setInputValue("")
-  }
+    const processedTag = trimmedTag.slice(0, maxTagLength);
+
+    onChange([...value, processedTag]);
+    setInputValue('');
+  };
 
   const removeTag = (tagToRemove: string) => {
-    onChange(value.filter((tag) => tag !== tagToRemove))
-  }
+    onChange(value.filter((tag) => tag !== tagToRemove));
+  };
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     // Add tag on Enter or comma
-    if ((e.key === "Enter" || e.key === ",") && inputValue) {
-      e.preventDefault()
-      addTag(inputValue)
+    if ((e.key === 'Enter' || e.key === ',') && inputValue) {
+      e.preventDefault();
+      addTag(inputValue);
     }
     // Remove last tag on Backspace if input is empty
-    else if (e.key === "Backspace" && !inputValue && value.length > 0) {
-      removeTag(value[value.length - 1])
+    else if (e.key === 'Backspace' && !inputValue && value.length > 0) {
+      removeTag(value[value.length - 1]);
     }
-  }
+  };
 
   // Focus the input when clicking the container
   const handleContainerClick = () => {
-    inputRef.current?.focus()
-  }
+    inputRef.current?.focus();
+  };
 
   return (
     <div
       ref={containerRef}
       onClick={handleContainerClick}
       className={cn(
-        "flex flex-wrap gap-2 rounded-md border bg-background p-2 focus-within:ring-2 focus-within:ring-ring",
-        disabled && "opacity-50 cursor-not-allowed",
-        className
+        'flex flex-wrap gap-2 rounded-md border bg-background p-2 focus-within:ring-2 focus-within:ring-ring',
+        disabled && 'cursor-not-allowed opacity-50',
+        className,
       )}
     >
       {value.map((tag) => (
@@ -78,8 +78,8 @@ export function TagInput({
             <button
               type="button"
               onClick={(e) => {
-                e.stopPropagation()
-                removeTag(tag)
+                e.stopPropagation();
+                removeTag(tag);
               }}
               className="ml-1 rounded-full outline-none focus:ring-2 focus:ring-ring"
             >
@@ -97,16 +97,16 @@ export function TagInput({
         onKeyDown={handleInputKeyDown}
         onBlur={() => {
           if (inputValue) {
-            addTag(inputValue)
+            addTag(inputValue);
           }
         }}
         className={cn(
-          "flex-1 min-w-28 bg-transparent outline-none placeholder:text-muted-foreground",
-          disabled && "cursor-not-allowed"
+          'min-w-28 flex-1 bg-transparent outline-none placeholder:text-muted-foreground',
+          disabled && 'cursor-not-allowed',
         )}
-        placeholder={value.length < maxTags ? placeholder : ""}
+        placeholder={value.length < maxTags ? placeholder : ''}
         disabled={disabled || value.length >= maxTags}
       />
     </div>
-  )
+  );
 }

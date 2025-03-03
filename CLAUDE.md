@@ -1,6 +1,7 @@
 # LLM-Play Codebase Guide
 
 ## Build & Test Commands
+
 - **Development**: `npm run dev` - Start Next.js development server
 - **Build**: `npm run build` - Production build
 - **Lint**: `npm run lint` - Run ESLint
@@ -11,6 +12,7 @@
 - **Coverage**: `npm run test:coverage` - Test with coverage report
 
 ## Code Style Guidelines
+
 - **TypeScript**: Use strict typing with explicit interfaces/types
 - **Imports**: Use absolute imports with `@/` prefix (e.g., `@/components/ui/button`)
 - **React**: Use functional components with hooks
