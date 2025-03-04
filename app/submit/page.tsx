@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, FormProvider } from 'react-hook-form';
+import { EdgeSubmissionService } from '@/services/edge-submission';
 import {
   FormControl,
   FormField,
@@ -129,6 +130,9 @@ export default function SubmitPage() {
     }
   };
 
+  // Watch for form changes to trigger validation
+  form.watch(['name', 'description', 'metadata']);
+
   // Determine if each step is valid
   const stepValidation = useMemo(() => {
     const formValues = form.getValues();
@@ -139,7 +143,9 @@ export default function SubmitPage() {
         !formErrors.name &&
         !formErrors.description &&
         !!formValues.name &&
-        !!formValues.description,
+        formValues.name.length >= 3 &&
+        !!formValues.description &&
+        formValues.description.length >= 10,
       [SubmissionStep.FileUpload]: true, // File is optional for now
       [SubmissionStep.Metadata]:
         !formErrors.metadata &&
@@ -150,6 +156,9 @@ export default function SubmitPage() {
       [SubmissionStep.Review]: true,
     };
   }, [form]);
+
+  // Create Edge submission service
+  const edgeSubmissionService = useMemo(() => new EdgeSubmissionService(), []);
 
   // Handle form submission
   const onSubmit = form.handleSubmit(async (data: EnvironmentSubmission) => {
@@ -173,19 +182,11 @@ export default function SubmitPage() {
         finalData.file_url = data.fileUpload.storageKey;
       }
 
-      const response = await fetch('/api/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify(finalData),
-      });
+      // Use the Edge Function for submission
+      const result = await edgeSubmissionService.submitEnvironment(finalData);
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Submission failed');
+      if (!result) {
+        throw new Error('Submission failed');
       }
 
       toast({
