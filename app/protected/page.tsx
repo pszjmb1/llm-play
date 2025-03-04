@@ -34,12 +34,29 @@ export default async function ProtectedPage() {
           Explore the features of LLM-Play by visiting the following sections:
         </p>
         <ul className="list-disc pl-5 text-sm text-muted-foreground">
-          <li><a href="/dashboard" className="text-primary underline">Dashboard</a> - View and manage your LLM challenges.</li>
-          <li><a href="/submit" className="text-primary underline">Submit a Challenge</a> - Contribute your own reinforcement learning environment.</li>
-          <li><a href="/community" className="text-primary underline">Community Discussions</a> - Engage with other contributors and share insights.</li>
+          <li>
+            <a href="/dashboard" className="text-primary underline">
+              Dashboard
+            </a>{' '}
+            - View and manage your LLM challenges.
+          </li>
+          <li>
+            <a href="/submit" className="text-primary underline">
+              Submit a Challenge
+            </a>{' '}
+            - Contribute your own reinforcement learning environment.
+          </li>
+          <li>
+            <a href="/community" className="text-primary underline">
+              Community Discussions
+            </a>{' '}
+            - Engage with other contributors and share insights.
+          </li>
         </ul>
         <form action="/sign-out" method="post">
-          <Button type="submit" variant="outline">Sign Out</Button>
+          <Button type="submit" variant="outline">
+            Sign Out
+          </Button>
         </form>
       </div>
     </div>
