@@ -130,32 +130,24 @@ export default function SubmitPage() {
     }
   };
 
-  // Watch for form changes to trigger validation
-  form.watch(['name', 'description', 'metadata']);
-
-  // Determine if each step is valid
-  const stepValidation = useMemo(() => {
-    const formValues = form.getValues();
-    const formErrors = form.formState.errors;
-
-    return {
-      [SubmissionStep.BasicInfo]:
-        !formErrors.name &&
-        !formErrors.description &&
-        !!formValues.name &&
-        formValues.name.length >= 3 &&
-        !!formValues.description &&
-        formValues.description.length >= 10,
-      [SubmissionStep.FileUpload]: true, // File is optional for now
-      [SubmissionStep.Metadata]:
-        !formErrors.metadata &&
-        !!formValues.metadata?.environmentType &&
-        !!formValues.metadata?.difficultyLevel &&
-        !!formValues.metadata?.successCriteria &&
-        formValues.metadata.tags.length > 0,
-      [SubmissionStep.Review]: true,
-    };
-  }, [form]);
+  // Watch form fields to trigger revalidation
+  const nameValue = form.watch('name');
+  const descriptionValue = form.watch('description');
+  const metadataValue = form.watch('metadata');
+  
+  // Determine if each step is valid - not in a useMemo to ensure it's recalculated on each render
+  const stepValidation = {
+    [SubmissionStep.BasicInfo]:
+      !!nameValue && nameValue.length >= 3 &&
+      !!descriptionValue && descriptionValue.length >= 10,
+    [SubmissionStep.FileUpload]: true, // File is optional for now
+    [SubmissionStep.Metadata]:
+      !!metadataValue?.environmentType &&
+      !!metadataValue?.difficultyLevel &&
+      !!metadataValue?.successCriteria &&
+      Array.isArray(metadataValue?.tags) && metadataValue.tags.length > 0,
+    [SubmissionStep.Review]: true,
+  };
 
   // Create Edge submission service
   const edgeSubmissionService = useMemo(() => new EdgeSubmissionService(), []);
@@ -550,6 +542,13 @@ export default function SubmitPage() {
 
   // Can proceed to next step?
   const canGoNext = () => {
+    console.log("Form validation state:", {
+      name: nameValue,
+      description: descriptionValue,
+      isValid: stepValidation[SubmissionStep.BasicInfo],
+      stepValidation
+    });
+    
     switch (currentStep) {
       case 0: // Basic Info
         return stepValidation[SubmissionStep.BasicInfo];
