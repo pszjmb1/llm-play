@@ -50,5 +50,5 @@ export type {
   CardTitleProps,
   CardDescriptionProps,
   CardContentProps,
-  CardFooterProps
+  CardFooterProps,
 };
