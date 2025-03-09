@@ -16,6 +16,7 @@ export default function Signup(props: { searchParams: Promise<Message> }) {
   const [passwordError, setPasswordError] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
   const [searchParams, setSearchParams] = useState<Message | null>(null);
+  const minLength = Number(process.env.NEXT_PUBLIC_MIN_PASSWORD_LENGTH) || 12; // fallback to 12 if env var is missing
 
   // Resolve the Promise<Message> and store it in state
   useEffect(() => {
@@ -34,12 +35,11 @@ export default function Signup(props: { searchParams: Promise<Message> }) {
 
   // Password validation function
   const validatePassword = (value: string) => {
-    const minLength = 8;
     const hasUppercase = /[A-Z]/.test(value);
     const hasNumber = /\d/.test(value);
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
 
-    if (value.length < minLength) {
+    if (value.length < minLength-1) {
       setPasswordError(`Password must be at least ${minLength} characters long.`);
     } else if (!hasUppercase) {
       setPasswordError('Password must include at least one uppercase letter.');
@@ -119,7 +119,7 @@ export default function Signup(props: { searchParams: Promise<Message> }) {
             placeholder="Your password"
             value={password}
             onChange={handlePasswordChange}
-            minLength={6}
+            minLength={ minLength }
             required
           />
           {passwordError && <p className="text-sm text-red-500">{passwordError}</p>}
