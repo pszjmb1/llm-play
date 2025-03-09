@@ -90,6 +90,28 @@ We believe that by working together, we can reveal insights into LLM behavior th
    ```
    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+## Configuration Setup
+
+This project uses a TOML configuration file for managing environment variables and application settings.
+
+1. Copy the example configuration:
+```bash
+cp config.toml.example config.toml
+```
+
+2. Update `config.toml` with your settings:
+```toml
+[auth]
+minimum_password_length = 12
+
+[supabase]
+url = "your-supabase-url"      # From your Supabase project settings
+anon_key = "your-anon-key"     # From your Supabase project settings
+```
+
+The `npm run dev` or `npm run build` commands will automatically generate the required environment variables from your `config.toml`.
+
+Note: `config.toml` is gitignored to protect sensitive credentials. Always use the example file as a template.
 ---
 
 ## How to Contribute
