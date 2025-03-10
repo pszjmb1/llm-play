@@ -47,3 +47,7 @@ codebase.md
 docs/.bundle/
 
 .vscode/
+
+# Configuration files with sensitive data
+.env.local
+config.toml
