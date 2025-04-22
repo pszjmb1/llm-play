@@ -25,36 +25,62 @@ export default function Dashboard() {
   // Fetch user session and environments on component mount
   useEffect(() => {
     async function fetchUserData() {
-      const supabase = createClient();
-      const { data: { session } } = await supabase.auth.getSession();
-      setSession(session);
-      
-      if (session) {
-        try {
-          // Fetch all environments and filter client-side
-          const { data, error } = await supabase
-            .from('environments')
-            .select('id, name, description, status, created_at, job_status, result_summary, user_id');
+      try {
+        const supabase = createClient();
+        const { data: { session } } = await supabase.auth.getSession();
+        setSession(session);
+        
+        if (session) {
+          try {
+            // TODO bugfix: remove excessive console logging after identifying the bug
+            console.log('Fetching environments for user:', session.user.id);
             
-          if (error) {
-            console.error('Error fetching environments:', error);
-          } else if (data) {
-            // Filter environments by user_id client-side
-            const userEnvironments = data.filter(env => env.user_id === session.user.id);
-            
-            // Sort by created_at in descending order
-            userEnvironments.sort((a, b) => 
-              new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-            );
-            
-            setEnvironments(userEnvironments);
+            // Use a simpler query without specifying fields
+            const { data, error } = await supabase
+              .from('environments')
+              // TODO why does this fail?
+              // .select('id, name, description, status, created_at, job_status, result_summary, user_id');            
+              .select();
+              
+            if (error) {
+              console.error('Error fetching environments:', error);
+              console.error('Error details:', {
+                message: error.message,
+                code: error.code,
+                details: error.details,
+                hint: error.hint
+              });
+            } else if (data) {
+              console.log('Environments fetched successfully:', data.length);
+              
+              // Filter environments by user_id client-side
+              const userEnvironments = data.filter(env => env.user_id === session.user.id);
+              console.log('User environments after filtering:', userEnvironments.length);
+              
+              // Sort by created_at in descending order
+              userEnvironments.sort((a, b) => 
+                new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+              );
+              
+              setEnvironments(userEnvironments);
+            }
+          } catch (error: any) {
+            console.error('Error in environments fetch:', error);
+            console.error('Error details:', {
+              message: error.message,
+              stack: error.stack
+            });
           }
-        } catch (error) {
-          console.error('Error in fetchUserData:', error);
         }
+      } catch (error: any) {
+        console.error('Error in session fetch:', error);
+        console.error('Error details:', {
+          message: error.message,
+          stack: error.stack
+        });
+      } finally {
+        setLoading(false);
       }
-      
-      setLoading(false);
     }
     
     fetchUserData();
